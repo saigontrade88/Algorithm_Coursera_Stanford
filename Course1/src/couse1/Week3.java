@@ -7,10 +7,14 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class Week3 {
+	
+	static long totalCount = 0;
+	
 	public static int Partition(ArrayList<Integer> myArray, int startIndex, int endIndex) {
 		
+		totalCount += endIndex - startIndex;
 		int pivotVal = myArray.get(startIndex);//select the pivot - the first element
-		System.out.printf("\tPartion, start = %d, end = %d, pivot = %d\t", startIndex, endIndex, pivotVal);
+		System.out.printf("\tPartion, start = %d, end = %d, pivot = %d, total count = %d\t", startIndex, endIndex, pivotVal, totalCount);
 		int pivotCorrectIndex = startIndex + 1;
 		for (int j = startIndex + 1; j <= endIndex; j++) {
 			if(myArray.get(j) < pivotVal) {
@@ -34,11 +38,12 @@ public class Week3 {
 			System.out.println(myArray.get(k));
 		}
 		
-		return pivotCorrectIndex;
+		return pivotCorrectIndex - 1;
 	}
-	public static void Quicksort(ArrayList<Integer> myArray, int startIndex, int endIndex ) {
+	public static void Quicksort(ArrayList<Integer> myArray, int startIndex, int endIndex) {
+			
 			System.out.printf("\tQuicksort, start = %d, end = %d", startIndex, endIndex);
-			long totalCount = 0;
+			
 			if (startIndex < endIndex) {
 				int pivotIndex = Partition(myArray, startIndex, endIndex);
 				Quicksort(myArray, startIndex, pivotIndex - 1);
@@ -76,10 +81,12 @@ public class Week3 {
 			System.out.println(myArray.get(k));
 		}
 		
+		
+		
 		//System.out.printf("inverse count = %d", SortAndCount(myArray, 0, myArray.size() - 1));
 		Quicksort(myArray, 0, myArray.size() - 1);
 		
-		System.out.println("*********************");
+		System.out.println("\n*********************");
 		
 		for(int k=0; k < myArray.size(); k++){
 			System.out.println(myArray.get(k));
