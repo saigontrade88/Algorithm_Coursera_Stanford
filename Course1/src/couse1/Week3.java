@@ -8,13 +8,13 @@ import java.util.Collections;
 
 public class Week3 {
 	
-	static long totalCount = 0;
+	long totalCount = 0;
 	
-	public static int Partition(ArrayList<Integer> myArray, int startIndex, int endIndex) {
+	public int Partition(ArrayList<Integer> myArray, int startIndex, int endIndex) {
 		
 		totalCount += endIndex - startIndex;
 		int pivotVal = myArray.get(startIndex);//select the pivot - the first element
-		System.out.printf("\tPartion, start = %d, end = %d, pivot = %d, total count = %d\t", startIndex, endIndex, pivotVal, totalCount);
+		//System.out.printf("\tPartion, start = %d, end = %d, pivot = %d, total count = %d\t", startIndex, endIndex, pivotVal, totalCount);
 		int pivotCorrectIndex = startIndex + 1;
 		for (int j = startIndex + 1; j <= endIndex; j++) {
 			if(myArray.get(j) < pivotVal) {
@@ -32,17 +32,17 @@ public class Week3 {
 		//exchange A[pivotCorrectIndex - 1] and A[startIndex]
 		Collections.swap(myArray, startIndex, pivotCorrectIndex - 1);
 		
-		System.out.printf("\tPartion, start = %d, end = %d, pivot = %d\t, after the partition\n", startIndex, endIndex, pivotVal);
+		//System.out.printf("\tPartion, start = %d, end = %d, pivot = %d\t, after the partition\n", startIndex, endIndex, pivotVal);
 		
-		for(int k=0; k < myArray.size(); k++){
-			System.out.println(myArray.get(k));
-		}
+//		for(int k=0; k < myArray.size(); k++){
+//			System.out.println(myArray.get(k));
+//		}
 		
 		return pivotCorrectIndex - 1;
 	}
-	public static void Quicksort(ArrayList<Integer> myArray, int startIndex, int endIndex) {
+	public void Quicksort(ArrayList<Integer> myArray, int startIndex, int endIndex) {
 			
-			System.out.printf("\tQuicksort, start = %d, end = %d", startIndex, endIndex);
+			//System.out.printf("\tQuicksort, start = %d, end = %d", startIndex, endIndex);
 			
 			if (startIndex < endIndex) {
 				int pivotIndex = Partition(myArray, startIndex, endIndex);
@@ -56,7 +56,7 @@ public class Week3 {
 		// TODO Auto-generated method stub
 		// Open the file that is the first command line parameter
 	try {
-		args[0] = "Input/input_beaunus_1_4.txt";
+		//args[0] = "Input/input_beaunus_1_4.txt";
 		
 		ArrayList<Integer> myArray = new ArrayList<Integer>();
 		
@@ -75,22 +75,25 @@ public class Week3 {
 		
 		myInFile.close();
 		
-		System.out.println("*********************");
+		//System.out.println("*********************");
 		
-		for(int k=0; k < myArray.size(); k++){
-			System.out.println(myArray.get(k));
-		}
+//		for(int k=0; k < myArray.size(); k++){
+//			System.out.println(myArray.get(k));
+//		}
 		
-		
+		Week3 mySol = new Week3();
 		
 		//System.out.printf("inverse count = %d", SortAndCount(myArray, 0, myArray.size() - 1));
-		Quicksort(myArray, 0, myArray.size() - 1);
+		mySol.Quicksort(myArray, 0, myArray.size() - 1);
 		
-		System.out.println("\n*********************");
+//		System.out.println("\n*********************");
 		
-		for(int k=0; k < myArray.size(); k++){
-			System.out.println(myArray.get(k));
-		}
+//		for(int k=0; k < myArray.size(); k++){
+//			System.out.println(myArray.get(k));
+//		}
+		System.out.println(mySol.totalCount);
+		//System.out.println(8);
+		//System.out.println(6);
 		
 	} catch (Exception e){//Catch exception if any
 		System.err.println("Error: " + e.toString());
