@@ -1,6 +1,7 @@
 package couse1;
 
 import java.io.*;
+import java.lang.Math;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,6 +11,13 @@ public class Week3 {
 	
 	long totalCount1 = 0;
 	long totalCount2 = 0;
+	
+	public int partitionMedian(ArrayList<Integer> myArray, int startIndex, int endIndex) {
+		int med = (int) Math.floor((startIndex + endIndex)/2.0);
+		//exchange A[startIndex] and A[median]
+		Collections.swap(myArray, startIndex, med);
+		return partitionFirstElement(myArray, startIndex, endIndex);
+	}
 	
 	public int partitionFirstElement(ArrayList<Integer> myArray, int startIndex, int endIndex) {
 		
@@ -84,23 +92,38 @@ public class Week3 {
 			}
 	}
 	
+	
+	
 	public void quicksortLastElement(ArrayList<Integer> myArray, int startIndex, int endIndex) {
-		
+
 		//System.out.printf("\tQuicksort, start = %d, end = %d", startIndex, endIndex);
-		
+
 		if (startIndex < endIndex) {
 			int pivotIndex = partitionLastElement(myArray, startIndex, endIndex);
 			quicksortLastElement(myArray, startIndex, pivotIndex - 1);
 			quicksortLastElement(myArray, pivotIndex + 1, endIndex);
-			
+
 		}
-}
+	}
+	
+	public void quicksortMedianElement(ArrayList<Integer> myArray, int startIndex, int endIndex) {
+
+		//System.out.printf("\tQuicksort, start = %d, end = %d", startIndex, endIndex);
+
+		if (startIndex < endIndex) {
+			int pivotIndex = partitionMedian(myArray, startIndex, endIndex);
+			quicksortFirstElement(myArray, startIndex, pivotIndex - 1);
+			quicksortFirstElement(myArray, pivotIndex + 1, endIndex);
+
+		}
+	}
+	
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		// Open the file that is the first command line parameter
 	try {
-//		args[0] = "Input/input_beaunus_1_4.txt";
+    	//args[0] = "Input/input_beaunus_1_4.txt";
 		
 		ArrayList<Integer> myArray = new ArrayList<Integer>();
 		
@@ -125,9 +148,12 @@ public class Week3 {
 //			System.out.println(myArray.get(k));
 //		}
 		Week3 mySol = new Week3();
+		Week3 mySol3 = new Week3();
+		
 		
 		ArrayList<Integer> cloned1 = new ArrayList<Integer>(myArray);
 		ArrayList<Integer> cloned2 = new ArrayList<Integer>(myArray);
+		ArrayList<Integer> cloned3 = new ArrayList<Integer>(myArray);
 		
 //		for(int k=0; k < cloned1.size(); k++){
 //			System.out.println(cloned1.get(k));
@@ -136,7 +162,8 @@ public class Week3 {
 		
 		//System.out.printf("inverse count = %d", SortAndCount(myArray, 0, myArray.size() - 1));
 		mySol.quicksortFirstElement(cloned1, 0, cloned1.size() - 1);
-		mySol.quicksortLastElement(cloned2, 0, cloned2.size() - 1);;
+		mySol.quicksortLastElement(cloned2, 0, cloned2.size() - 1);
+		mySol3.quicksortMedianElement(cloned3, 0, cloned3.size() - 1);
 		
 //		System.out.println("\n***************************");
 //		
@@ -151,7 +178,7 @@ public class Week3 {
 
 		System.out.println(mySol.totalCount1);
 		System.out.println(mySol.totalCount2);
-		System.out.println(6);
+		System.out.println(mySol3.totalCount1);
 		
 		//System.out.println(6);
 		
