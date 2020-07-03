@@ -31,21 +31,21 @@ public class Week3 {
 	
 	public int partitionMedian(ArrayList<Integer> myArray, int startIndex, int endIndex) {
 		
-		String inputArray = "Input array: [";
-		
-		for(int k= startIndex; k <= endIndex; k++){
-			
-			inputArray += myArray.get(k);
-			if(k == endIndex) {
-				inputArray += "]";
-			}
-			else {
-				inputArray += ", ";
-			}
-			
-		}
-		
-		System.out.println(inputArray);
+//		String inputArray = "Input array: [";
+//		
+//		for(int k= startIndex; k <= endIndex; k++){
+//			
+//			inputArray += myArray.get(k);
+//			if(k == endIndex) {
+//				inputArray += "]";
+//			}
+//			else {
+//				inputArray += ", ";
+//			}
+//			
+//		}
+//		
+//		System.out.println(inputArray);
 		
 		int middle = (int) Math.floor((startIndex + endIndex)/2.0);
 		
@@ -57,7 +57,7 @@ public class Week3 {
 		
 		//medOfThree = how ab
 		
-		System.out.println("first: " + myArray.get(startIndex) + " last: " + myArray.get(endIndex) + " middle: " + myArray.get(middle) + " median: " + myArray.get(medOfThree) + " count = " + (endIndex - startIndex));
+		//System.out.println("first: " + myArray.get(startIndex) + " last: " + myArray.get(endIndex) + " middle: " + myArray.get(middle) + " median: " + myArray.get(medOfThree) + " count = " + (endIndex - startIndex));
 		
 		//exchange A[startIndex] and A[median of three]
 		Collections.swap(myArray, startIndex, medOfThree);
@@ -95,36 +95,45 @@ public class Week3 {
 		
 		return pivotCorrectIndex - 1;
 	}
+	
 	public int partitionLastElement(ArrayList<Integer> myArray, int startIndex, int endIndex) {
-
-		totalCount2 += endIndex - startIndex;
-		int pivotVal = myArray.get(endIndex);//select the pivot - the last/final element
-		//System.out.printf("\tPartion, start = %d, end = %d, pivot = %d, total count = %d\t", startIndex, endIndex, pivotVal, totalCount2);
-		int pivotCorrectIndex = startIndex - 1;
-		for (int j = startIndex; j < endIndex; j++) {
-			if(myArray.get(j) <= pivotVal) {
-				//System.out.printf("Inside comparison, j = %d", j);		
-
-				pivotCorrectIndex ++;
-				
-				//exchange A[pivotCorrectIndex] and A[j]
-				Collections.swap(myArray, pivotCorrectIndex, j);
-
-
-			}
-		}
-
-		//exchange A[pivotCorrectIndex - 1] and A[startIndex]
-		Collections.swap(myArray, endIndex, pivotCorrectIndex + 1);
-
-		//System.out.printf("\tPartion, start = %d, end = %d, pivot = %d\t, after the partition\n", startIndex, endIndex, pivotVal);
-
-		//		for(int k=0; k < myArray.size(); k++){
-		//			System.out.println(myArray.get(k));
-		//		}
-
-		return pivotCorrectIndex + 1;
+		
+		//Exchange the pivot element (i.e., the last element) with the first element.
+		Collections.swap(myArray, startIndex, endIndex);
+		return partitionFirstElement(myArray, startIndex, endIndex);
+		
 	}
+	
+//	public int partitionLastElement(ArrayList<Integer> myArray, int startIndex, int endIndex) {
+//
+//		totalCount2 += endIndex - startIndex;
+//		int pivotVal = myArray.get(endIndex);//select the pivot - the last/final element
+//		//System.out.printf("\tPartion, start = %d, end = %d, pivot = %d, total count = %d\t", startIndex, endIndex, pivotVal, totalCount2);
+//		int pivotCorrectIndex = startIndex - 1;
+//		for (int j = startIndex; j < endIndex; j++) {
+//			if(myArray.get(j) <= pivotVal) {
+//				//System.out.printf("Inside comparison, j = %d", j);		
+//
+//				pivotCorrectIndex ++;
+//				
+//				//exchange A[pivotCorrectIndex] and A[j]
+//				Collections.swap(myArray, pivotCorrectIndex, j);
+//
+//
+//			}
+//		}
+//
+//		//exchange A[pivotCorrectIndex - 1] and A[startIndex]
+//		Collections.swap(myArray, endIndex, pivotCorrectIndex + 1);
+//
+//		//System.out.printf("\tPartion, start = %d, end = %d, pivot = %d\t, after the partition\n", startIndex, endIndex, pivotVal);
+//
+//		//		for(int k=0; k < myArray.size(); k++){
+//		//			System.out.println(myArray.get(k));
+//		//		}
+//
+//		return pivotCorrectIndex + 1;
+//	}
 
 	public void quicksortFirstElement(ArrayList<Integer> myArray, int startIndex, int endIndex) {
 			
@@ -172,7 +181,7 @@ public class Week3 {
 		// TODO Auto-generated method stub
 		// Open the file that is the first command line parameter
 	try {
-    	//args[0] = "Input/input_beaunus_1_4.txt";
+    	args[0] = "Input/Wk3_QuickSort.txt";
 		
 		ArrayList<Integer> myArray = new ArrayList<Integer>();
 		
@@ -196,7 +205,8 @@ public class Week3 {
 //		for(int k=0; k < myArray.size(); k++){
 //			System.out.println(myArray.get(k));
 //		}
-		Week3 mySol = new Week3();
+		Week3 mySol1 = new Week3();
+		Week3 mySol2 = new Week3();
 		Week3 mySol3 = new Week3();
 		
 		
@@ -210,8 +220,8 @@ public class Week3 {
 //		
 		
 		//System.out.printf("inverse count = %d", SortAndCount(myArray, 0, myArray.size() - 1));
-		//mySol.quicksortFirstElement(cloned1, 0, cloned1.size() - 1);
-		//mySol.quicksortLastElement(cloned2, 0, cloned2.size() - 1);
+		mySol1.quicksortFirstElement(cloned1, 0, cloned1.size() - 1);
+		mySol2.quicksortLastElement(cloned2, 0, cloned2.size() - 1);
 		mySol3.quicksortMedianElement(cloned3, 0, cloned3.size() - 1);
 		
 //		System.out.println("\n***************************");
@@ -225,8 +235,8 @@ public class Week3 {
 //			System.out.println(cloned1.get(k));
 //		}
 
-		//System.out.print(mySol.totalCount1  + "\n");
-		//System.out.print(mySol.totalCount2  + "\n");
+		System.out.print(mySol1.totalCount1  + "\n");
+		System.out.print(mySol2.totalCount1  + "\n");
 		System.out.print(mySol3.totalCount1 + "\n");
 		
 		//System.out.println(6);
