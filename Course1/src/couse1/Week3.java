@@ -1,21 +1,67 @@
 package couse1;
 
 import java.io.*;
+
 import java.lang.Math;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.*; 
 
 public class Week3 {
 	
 	long totalCount1 = 0;
 	long totalCount2 = 0;
 	
+	public int medianOfThree(ArrayList<Integer> myArray, int startIndex, int middleIndex, int endIndex) {
+		
+		int medOfThree = 0;
+		
+		//Identify which of these three elements: first, middle and last is the median 
+		// (i.e., the one whose value is in between the other two), and use this as your pivot
+		
+		//temp could be of size 2????
+		int[] temp = new int[] {myArray.get(startIndex), myArray.get(middleIndex), myArray.get(endIndex)};
+		
+		Arrays.sort(temp);
+		
+		return myArray.indexOf(temp[1]);
+	}
+	
 	public int partitionMedian(ArrayList<Integer> myArray, int startIndex, int endIndex) {
-		int med = (int) Math.floor((startIndex + endIndex)/2.0);
-		//exchange A[startIndex] and A[median]
-		Collections.swap(myArray, startIndex, med);
+		
+		String inputArray = "Input array: [";
+		
+		for(int k= startIndex; k <= endIndex; k++){
+			
+			inputArray += myArray.get(k);
+			if(k == endIndex) {
+				inputArray += "]";
+			}
+			else {
+				inputArray += ", ";
+			}
+			
+		}
+		
+		System.out.println(inputArray);
+		
+		int middle = (int) Math.floor((startIndex + endIndex)/2.0);
+		
+		int medOfThree = medianOfThree(myArray, startIndex, middle, endIndex);
+		
+		//Identify which of these three elements: first, middle and last is the median 
+		// (i.e., the one whose value is in between the other two), and use this as your pivot
+	
+		
+		//medOfThree = how ab
+		
+		System.out.println("first: " + myArray.get(startIndex) + " last: " + myArray.get(endIndex) + " middle: " + myArray.get(middle) + " median: " + myArray.get(medOfThree) + " count = " + (endIndex - startIndex));
+		
+		//exchange A[startIndex] and A[median of three]
+		Collections.swap(myArray, startIndex, medOfThree);
+		
 		return partitionFirstElement(myArray, startIndex, endIndex);
 	}
 	
@@ -111,9 +157,12 @@ public class Week3 {
 		//System.out.printf("\tQuicksort, start = %d, end = %d", startIndex, endIndex);
 
 		if (startIndex < endIndex) {
+			
+	
+			
 			int pivotIndex = partitionMedian(myArray, startIndex, endIndex);
-			quicksortFirstElement(myArray, startIndex, pivotIndex - 1);
-			quicksortFirstElement(myArray, pivotIndex + 1, endIndex);
+			quicksortMedianElement(myArray, startIndex, pivotIndex - 1);
+			quicksortMedianElement(myArray, pivotIndex + 1, endIndex);
 
 		}
 	}
@@ -161,8 +210,8 @@ public class Week3 {
 //		
 		
 		//System.out.printf("inverse count = %d", SortAndCount(myArray, 0, myArray.size() - 1));
-		mySol.quicksortFirstElement(cloned1, 0, cloned1.size() - 1);
-		mySol.quicksortLastElement(cloned2, 0, cloned2.size() - 1);
+		//mySol.quicksortFirstElement(cloned1, 0, cloned1.size() - 1);
+		//mySol.quicksortLastElement(cloned2, 0, cloned2.size() - 1);
 		mySol3.quicksortMedianElement(cloned3, 0, cloned3.size() - 1);
 		
 //		System.out.println("\n***************************");
@@ -176,9 +225,9 @@ public class Week3 {
 //			System.out.println(cloned1.get(k));
 //		}
 
-		System.out.println(mySol.totalCount1);
-		System.out.println(mySol.totalCount2);
-		System.out.println(mySol3.totalCount1);
+		//System.out.print(mySol.totalCount1  + "\n");
+		//System.out.print(mySol.totalCount2  + "\n");
+		System.out.print(mySol3.totalCount1 + "\n");
 		
 		//System.out.println(6);
 		
