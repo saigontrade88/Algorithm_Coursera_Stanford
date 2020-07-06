@@ -3,20 +3,45 @@ package couse1.week4;
 
 import java.io.*;
 import java.util.*;
-
-import couse1.Week3;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Week4 {
+	
+	/** Returns the tokens that match the regex pattern from the document 
+	 * text string.
+	 * @param pattern A regular expression string specifying the 
+	 *   token pattern desired
+	 * @return A List of tokens from the document text that match the regex 
+	 *   pattern
+	 */
+	protected List<String> getTokens(String text, String pattern){
+		
+		ArrayList<String> tokens = new ArrayList<String>();
+		
+		Pattern tokSplitter = Pattern.compile(pattern);
+		
+		Matcher m = tokSplitter.matcher(text);
+		
+		while(m.find()){
+			tokens.add(m.group());
+		}
+		
+		return tokens;
+	}
+	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		// Open the file that is the first command line parameter
 		try {
 			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
+			
+			//args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 
 			ArrayList<GraphVertex> verts = new ArrayList<GraphVertex>();
 		    ArrayList<GraphEdge>   edges = new ArrayList<GraphEdge>();
 		    
-		  //Adjacency vertex list
+		    //Adjacency vertex list
 		    // Map vertex to its ArrayList<String>
 		    // Look up the ArrayList given the vertex name
 		    // Return the ArrayList for the given vertex
@@ -26,28 +51,73 @@ public class Week4 {
 		    
 		    // TODO: PUT CODE IN TO LOAD THE VERTICES
 		    
-		    
-		    System.out.println("Number of vertices" + verts.size() + "\n");
-		    
-		    // TODO: PUT CODE IN TO LOAD THE EDGES
-		    GraphVertex mySrcVert = null;
-		    GraphVertex myDestVert = null;
-		    
-		    System.out.println("Number of edges " + edges.size() + "\n");
-		    
-
-			FileInputStream fstream = new FileInputStream(args[0]);
+		    FileInputStream fstream = new FileInputStream(args[0]);
 			// Get the object of DataInputStream
 			DataInputStream in = new DataInputStream(fstream);
 
 			BufferedReader myInFile = new BufferedReader(new InputStreamReader(in));
 
 			String currentLine;
-
+			
+			String[] vertString = new String[100];
+			
+			Week4 sol = new Week4();
+			
+			List<String> myIntegerList = null;
+			
 			while((currentLine = myInFile.readLine()) != null) {
 				//System.out.println(currentLine);
-				//myArray.add(Integer.parseInt(currentLine));
+				
+				myIntegerList = sol.getTokens(currentLine, "[0-9]");
+				
+				String id;
+				System.out.println("\nPrint myIntegerList"); 
+				
+				for(String s:myIntegerList) {
+					System.out.println(s);
+				}
+				
+				GraphVertex mySrcVert = new GraphVertex(myIntegerList.get(0), 0, 0) ;
+				
+				verts.add(mySrcVert);
+				
+				System.out.println("My source vertex is " + mySrcVert.getStringID()); 
+				
+				GraphVertex myDestVert = null;
+				
+				System.out.println("myIntegerList size =  " + myIntegerList.size() + "\n");
+				
+				for (int i = 1; i < myIntegerList.size(); i++) {
+					
+					id = myIntegerList.get(i);
+					//Build the GraphVertex array list
+					
+					myDestVert =  new GraphVertex(id, 0, 0);
+					
+					verts.add(myDestVert);
+
+					//System.out.println(s);
+
+					// TODO: PUT CODE IN TO LOAD THE EDGES
+
+					System.out.println(myDestVert.getStringID());
+					
+					//Add to the edge list
+					edges.add(new GraphEdge(mySrcVert, myDestVert));
+									
+				}
+	
 			}
+		   
+		    
+		    System.out.println("Number of vertices " + verts.size() + "\n");
+		    
+		    for(GraphVertex v: verts){
+		        System.out.println(v.id); 
+		      }
+		     
+		    System.out.println("Number of edges " + edges.size() + "\n");
+		    
 
 			myInFile.close();
 

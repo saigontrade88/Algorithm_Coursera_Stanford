@@ -20,11 +20,13 @@ public class GraphVertex implements Comparator<GraphVertex> {
 	/****Dijkstras*****/
 
 	public GraphVertex() {}
+	
 	public GraphVertex( String _id, int _group, float _x, float _y, int _dId) {
 		id = _id;
 
 		dId = _dId;
 	}
+	
 	public GraphVertex(String _id, int _dId, float _cost){
 		id = _id;
 		dId = _dId;
