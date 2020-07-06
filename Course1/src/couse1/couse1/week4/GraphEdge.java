@@ -4,7 +4,7 @@ public class GraphEdge {
 	
 	GraphVertex v0,v1;
 
-	public GraphEdge( GraphVertex _v0, GraphVertex _v1, float _weight ){
+	public GraphEdge( GraphVertex _v0, GraphVertex _v1){
 		v0 = _v0;
 		v1 = _v1;
 
