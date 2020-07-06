@@ -36,7 +36,7 @@ public class Week4 {
 		try {
 			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
 			
-			//args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
+			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 
 			ArrayList<GraphVertex> verts = new ArrayList<GraphVertex>();
 		    ArrayList<GraphEdge>   edges = new ArrayList<GraphEdge>();
@@ -47,7 +47,7 @@ public class Week4 {
 		    // Return the ArrayList for the given vertex
 		    // Summarize the info from the GraphEdge ArrayList
 		    
-		    HashMap<Integer, ArrayList<GraphVertex>> adj = null;
+		    HashMap<String, ArrayList<GraphVertex>> adj = null;
 		    
 		    // TODO: PUT CODE IN TO LOAD THE VERTICES
 		    
@@ -94,8 +94,6 @@ public class Week4 {
 					
 					myDestVert =  new GraphVertex(id, 0, 0);
 					
-					verts.add(myDestVert);
-
 					//System.out.println(s);
 
 					// TODO: PUT CODE IN TO LOAD THE EDGES
@@ -108,8 +106,7 @@ public class Week4 {
 				}
 	
 			}
-		   
-		    
+		   	    
 		    System.out.println("Number of vertices " + verts.size() + "\n");
 		    
 		    for(GraphVertex v: verts){
@@ -123,7 +120,41 @@ public class Week4 {
 
 			//Initialize the adjacency vertex list
 			
-			//Populate the adjacency list
+			//Initialize the adjacency vertex list
+
+		    adj = new HashMap<String, ArrayList<GraphVertex>>();
+		    
+		    for ( GraphVertex v : verts ) {
+		      ArrayList<GraphVertex> neighborList = new ArrayList<GraphVertex>();
+		      adj.put(v.id, neighborList);
+		    }
+		    
+		    //Populate the adjacency list
+		    //For each edge
+		    for ( GraphEdge u : edges) {
+		    	//If the source vertex is existing
+		    	if (adj.containsKey(u.v0.id)) {
+		    		//Get its adjacency list
+		    		ArrayList<GraphVertex> neighborList = adj.get(u.v0.id);
+		    		//Add the neighboring vertex
+		    		neighborList.add(u.v1);
+		    		//update the Hashmap
+		    		adj.put(u.v0.id, neighborList);
+		    	} else {
+		    		System.out.println("New vertex. Double check the input data");
+		    	}
+		    }
+
+		    System.out.println("The adjacency list");
+
+		    for (String Id : adj.keySet()) {
+		    	ArrayList<GraphVertex> neighborList = adj.get(Id);
+		    	String myString = Id + " ";
+		    	for(int i = 0; i < neighborList.size(); i++){
+		    		myString = myString + "\t" + neighborList.get(i).id;   
+		    	}
+		    	System.out.println(myString);
+		    }
 
 			//System.out.println(6);
 
