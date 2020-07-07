@@ -118,7 +118,6 @@ public class Week4 {
 
 			//Initialize the adjacency vertex list
 			
-			//Initialize the adjacency vertex list
 
 		    adj = new HashMap<String, ArrayList<GraphVertex>>();
 		    
