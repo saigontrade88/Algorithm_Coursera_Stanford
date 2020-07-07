@@ -58,9 +58,7 @@ public class Week4 {
 			BufferedReader myInFile = new BufferedReader(new InputStreamReader(in));
 
 			String currentLine;
-			
-			String[] vertString = new String[100];
-			
+						
 			Week4 sol = new Week4();
 			
 			List<String> myIntegerList = null;
@@ -68,7 +66,7 @@ public class Week4 {
 			while((currentLine = myInFile.readLine()) != null) {
 				//System.out.println(currentLine);
 				
-				myIntegerList = sol.getTokens(currentLine, "[0-9]");
+				myIntegerList = sol.getTokens(currentLine, "[0-9]+");
 				
 				String id;
 				System.out.println("\nPrint myIntegerList"); 
