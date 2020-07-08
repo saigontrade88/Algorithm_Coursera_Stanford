@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 public class Week4 {
 	
 	/** Returns the tokens that match the regex pattern from the document 
@@ -34,9 +36,12 @@ public class Week4 {
 		// TODO Auto-generated method stub
 		// Open the file that is the first command line parameter
 		try {
-			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
+			//args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
 			
 			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
+			
+			//Karger's parameters = 10000000;
+			int numberMinCut = 10000000;
 
 			ArrayList<GraphVertex> verts = new ArrayList<GraphVertex>();
 		    ArrayList<GraphEdge>   edges = new ArrayList<GraphEdge>();
@@ -143,15 +148,10 @@ public class Week4 {
 		    }
 
 		    System.out.println("The adjacency list");
-
-		    for (String Id : adj.keySet()) {
-		    	ArrayList<GraphVertex> neighborList = adj.get(Id);
-		    	String myString = Id + " ";
-		    	for(int i = 0; i < neighborList.size(); i++){
-		    		myString = myString + "\t" + neighborList.get(i).id;   
-		    	}
-		    	System.out.println(myString);
-		    }
+		    
+		    Graph myGraph = new Graph(verts, edges, adj);
+		    
+		    myGraph.printGraph();
 
 			//System.out.println(6);
 
