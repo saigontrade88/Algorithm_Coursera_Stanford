@@ -1,5 +1,7 @@
 package couse1.week4;
 
+import java.util.Comparator;
+
 public class GraphEdge {
 	
 	GraphVertex v0,v1;
@@ -9,5 +11,16 @@ public class GraphEdge {
 		v1 = _v1;
 
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		GraphEdge temp = (GraphEdge) obj;
+		return this.v0.equals(temp.v0) && this.v1.equals(temp.v1);
+	}
+
+
+	
+	
 	  
 }
