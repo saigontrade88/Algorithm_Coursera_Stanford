@@ -153,15 +153,17 @@ public class Week4 {
 		    
 		    myGraph.printGraph();
 		    
-		    for (int i = 0; i < verts.size(); i++) {
-		    	if(myGraph.kargerMinCut() < numberMinCut)
-		    		numberMinCut = myGraph.kargerMinCut();
-		    }
-
-			System.out.println(numberMinCut);
+//		    for (int i = 0; i < 1; i++) {
+//		    	if(myGraph.kargerMinCut() < numberMinCut)
+//		    		numberMinCut = myGraph.kargerMinCut();
+//		    }
+		    
+		    numberMinCut = myGraph.kargerMinCut();
+			System.out.println("numberMinCut= " + numberMinCut);
 
 		} catch (Exception e){//Catch exception if any
 			System.err.println("Error: " + e.toString());
+			e.printStackTrace();
 		}
 
 
