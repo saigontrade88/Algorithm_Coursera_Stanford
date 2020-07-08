@@ -18,9 +18,5 @@ public class GraphEdge {
 		GraphEdge temp = (GraphEdge) obj;
 		return this.v0.equals(temp.v0) && this.v1.equals(temp.v1);
 	}
-
-
-	
-	
-	  
+  
 }

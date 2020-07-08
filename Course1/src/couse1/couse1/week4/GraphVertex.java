@@ -9,7 +9,7 @@ import java.util.Comparator;
  * @author Dr.Rosen at prosen@usf.edu.
  *
  */
-public class GraphVertex implements Comparator<GraphVertex> {
+public class GraphVertex implements Comparable {
 	String id;
 	
 	/****Dijkstras*****/
@@ -52,12 +52,17 @@ public class GraphVertex implements Comparator<GraphVertex> {
 	}
 
 	@Override
-	public int compare(GraphVertex node1, GraphVertex node2) {
-
-		if(node1.cost < node2.cost) return -1;
-		if(node1.cost > node2.cost) return 1;
-		return 0;
-
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return this.id.compareTo(((GraphVertex)arg0).id);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return this.compareTo(obj) == 0;
+	}
+
+	
 
 }

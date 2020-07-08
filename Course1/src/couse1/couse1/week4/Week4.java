@@ -41,7 +41,7 @@ public class Week4 {
 			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 			
 			//Karger's parameters = 10000000;
-			int numberMinCut = 10000000;
+			long numberMinCut = 10000000;
 
 			ArrayList<GraphVertex> verts = new ArrayList<GraphVertex>();
 		    ArrayList<GraphEdge>   edges = new ArrayList<GraphEdge>();
@@ -152,8 +152,13 @@ public class Week4 {
 		    Graph myGraph = new Graph(verts, edges, adj);
 		    
 		    myGraph.printGraph();
+		    
+		    for (int i = 0; i < verts.size(); i++) {
+		    	if(myGraph.kargerMinCut() < numberMinCut)
+		    		numberMinCut = myGraph.kargerMinCut();
+		    }
 
-			//System.out.println(6);
+			System.out.println(numberMinCut);
 
 		} catch (Exception e){//Catch exception if any
 			System.err.println("Error: " + e.toString());
