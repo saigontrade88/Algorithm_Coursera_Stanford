@@ -18,5 +18,11 @@ public class GraphEdge {
 		GraphEdge temp = (GraphEdge) obj;
 		return this.v0.equals(temp.v0) && this.v1.equals(temp.v1);
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "(" + v0.getStringID() + "," + v1.getStringID() + ")";
+	}
   
 }

@@ -19,14 +19,14 @@ public class Graph {
 		this.verts = verts;
 		this.edges = edges;
 		this.adj = adj;
-		selectedEdges = new ArrayList<GraphEdge>();
+		selectedEdges = null;
 	}
 	
 	public Graph(ArrayList<GraphVertex> verts, ArrayList<GraphEdge> edges) {
 		this.verts = verts;
 		this.edges = edges;
 		this.adj = null;
-		selectedEdges = new ArrayList<GraphEdge>();
+		selectedEdges = null;
 	}
 
 	// A utility function to add an edge in an 
@@ -79,6 +79,18 @@ public class Graph {
         } 
     }
     
+    static void printGraph(HashMap<String, ArrayList<GraphVertex>> currAdj) { 
+    	for (String Id : currAdj.keySet()) {
+    		ArrayList<GraphVertex> neighborList = currAdj.get(Id);
+            System.out.println("\nAdjacency list of vertex " + Id); 
+            System.out.print("head"); 
+            for(int i = 0; i < neighborList.size(); i++){ 
+                System.out.print(" -> "+ neighborList.get(i).id); 
+            } 
+            System.out.println(); 
+        } 
+    }
+    
 //    void repetitiveKargerMinCut(int numRep) {
 //    	for(int i = 0; i < numRep; i++) {
 //    		this.numMinCut = kargerMinCut();
@@ -98,7 +110,8 @@ public class Graph {
     	//write your random edge selector, selected edge
     	while(currVerts.size() > 2) {
     		if(currEdges.size() > 0) {
-    			this.selectEdge(currEdges, adj);
+    			
+    			this.selectEdge(currEdges, currAdj);
     			
     			//merge (or “contract” ) u and v into a single vertex
     			this.contractAnEdge(selected, currVerts, currEdges, currAdj);
@@ -132,37 +145,33 @@ public class Graph {
     
     //Randomly select an edge and update the selectedEdges list
     //MUST DO: parameter EdgeList
-    void selectEdge(ArrayList<GraphEdge>edges, HashMap<String, ArrayList<GraphVertex>> adj) {
+    void selectEdge(ArrayList<GraphEdge>currEdges, HashMap<String, ArrayList<GraphVertex>> adj) {
     	
     	Random rand = new Random();
     	GraphEdge temp = null;
-    	for(int i = 0; i < edges.size(); i++) {
-    		int r =  rand.nextInt(edges.size());
+    	//Randomly select an edge from the current edge list
+    	
+    		int r =  rand.nextInt(currEdges.size());
     		//avoid modifying the edge list
-        	temp = new GraphEdge(edges.get(r).v0, edges.get(r).v1);
-        	if(adj.containsKey(temp.v0.id))
-        		break;
-        			
-    	}
+        	temp = currEdges.get(r);
+        	//the adjacency list is updated after each loop so only selecting the remaining edges
+        		
     	
-    	
-    	//MUST DO: check if the source vertex is available in the adjacency list
     	   	
-    	if(selectedEdges == null)
-    		existed = true;
-    	else {
-    		for(GraphEdge edge:selectedEdges) {
-    			if(temp.equals(edge)) {
-    				existed = true;
-    			}
-    		}
+    	//MUST DO: check if the source vertex is available in the adjacency list  	   	
+    	if(selectedEdges == null) {
+    		selectedEdges = new ArrayList<GraphEdge>();
+    		//existed = false;
     	}
+    	    	  	
     	
-    	
-    	if(!existed) {
     		selectedEdges.add(temp);
     		selected = temp;
-    	}
+    		
+    		System.out.println("Selected edge = " + selected.toString());
+    		System.out.println("My selected edge's size is " + selectedEdges.size());
+    	
+    	//no else here 
     	
     }
     
@@ -182,13 +191,11 @@ public class Graph {
     		neighborListV0.addAll(neighborListV1);
     		neighborListV0.remove(u.v1);
 
-    	
-
     		//update the Hashmap
     		currAdj.put(u.v0.id, neighborListV0);
 
     		//delete the Vertices[v1]
-    		currAdj.remove(u.v1);
+    		currAdj.remove(u.v1.getStringID());
 
 
 
@@ -196,7 +203,18 @@ public class Graph {
 
     		//then delete the edge [v0, v1].
     		currEdges.remove(u);
-    		//? delete the remaining edge: no need since v1 is deleted from the adjacency list
+    		
+    		GraphEdge temp = null;
+    		//find edge[v1, v0]
+    		for(GraphEdge u2: currEdges) {
+    			if(u2.v0.compareTo(u.v1) == 0 && u2.v1.compareTo(u.v0) == 0) {
+    				temp = u2;
+    				break;
+    			}
+    		}
+    		//then delete the edge [v1, v0]
+    		currEdges.remove(temp);
+    		
     	} 		 		
     	
     	//For all vertices in the adjacency list, changing all occurrences of v1 to v0
@@ -213,26 +231,41 @@ public class Graph {
 
 
     	}
+    	
+    	printGraph(currAdj);
     	//remove self loops
     	
     	ArrayList<GraphVertex> neighborList = currAdj.get(u.v0.id);
     	//ArrayList<GraphVertex> selfloop = new GraphVertex();
-    	int[] selfloop = new int[neighborList.size()];
+    	ArrayList<Integer> selfloop = new ArrayList<Integer>();
     	int i = 0;
     	for(GraphVertex temp: neighborList) {
     		if(temp.getStringID().equals(u.v0.getStringID())) {
     			//remove the self loop
     			//neighborList.remove(temp);
-    			selfloop[i] = neighborList.indexOf(temp);
+    			selfloop.add(neighborList.indexOf(temp));
     			//update the Hashmap accordingly
     			//currAdj.put(u.v0.id, neighborList);
     		}
     	}
     	
-    	for(int j = 0; j < selfloop.length; j++)
-    		neighborList.remove(selfloop[j]);
+    	for(int j = 0; j < selfloop.size(); j++)
+    		neighborList.remove(selfloop.get(j));
     	
     	currAdj.put(u.v0.id, neighborList);
+    	
+    	//rebuild the edge array list from the current adjacency list
+    	//find edge[v1, v0]
+    	ArrayList<GraphEdge> temp = new ArrayList<GraphEdge>();
+		for(GraphEdge u2: currEdges) {
+			if(u2.v0.compareTo(u.v1) == 0) {
+				temp.add(u2);
+				//currEdges.remove(u2);
+				
+			}
+		}
+		//then delete the edge [v1, *]
+		currEdges.removeAll(temp);
     }
     	
     }
