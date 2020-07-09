@@ -125,9 +125,9 @@ public class Graph {
     	
     	
     	
-    	System.out.println("Before the Karger's algo");
+    	//System.out.println("Before the Karger's algo");
     	
-    	this.printGraph(currAdj);
+    	//this.printGraph(currAdj);
     	
     	//write your random edge selector, selected edge
     	while(currVerts.size() > 2) {
@@ -163,7 +163,7 @@ public class Graph {
     	//when finish the contraction, only 2 vertices are left only
        	for(GraphVertex v: currVerts) {
     		if(v != null) {
-    			System.out.println(v.getStringID());
+    			//System.out.println(v.getStringID());
     			finalVert = v;
     			break;
     		}
@@ -211,8 +211,8 @@ public class Graph {
     		selectedEdges.add(temp);
     		selected = temp;
     		
-    		System.out.println("Selected edge = " + selected.toString());
-    		System.out.println("My selected edge's size is " + selectedEdges.size());
+    		//System.out.println("Selected edge = " + selected.toString());
+    		//System.out.println("My selected edge's size is " + selectedEdges.size());
     	
     	//no else here 
     	
@@ -274,12 +274,12 @@ public class Graph {
     	int i = neighborList.size() - 1;
     	
     	for(; i >= 0;i--) {
-    		System.out.println("head " + u.v0.getStringID() + "-> " + neighborList.get(i).getStringID());
+    		//System.out.println("head " + u.v0.getStringID() + "-> " + neighborList.get(i).getStringID());
     		if(neighborList.get(i).getStringID().equals(u.v0.getStringID())) {
     			//remove the self loop
     			//neighborList.remove(temp);
     			selfloop.add(i);
-    			System.out.println("Self loop is at = " + i);
+    			//System.out.println("Self loop is at = " + i);
     			//update the Hashmap accordingly
     			//currAdj.put(u.v0.id, neighborList);
     		}
@@ -290,7 +290,7 @@ public class Graph {
     	
     	currAdj.put(u.v0.id, neighborList);
     	
-    	printGraph(currAdj);
+    	//printGraph(currAdj);
     	
     	
     }
