@@ -103,7 +103,7 @@ public class Graph {
     	long numMinCut = 1000000;
     	
     	//make a copy of the edge list, vertex list
-    	ArrayList<GraphEdge> currEdges = null;
+    	ArrayList<GraphEdge> currEdges = new ArrayList<GraphEdge>(edges);
     	ArrayList<GraphVertex> currVerts = new ArrayList<GraphVertex>(verts);
     	HashMap<String, ArrayList<GraphVertex>> currAdj = new HashMap<String, ArrayList<GraphVertex>>(adj);
     	
@@ -115,6 +115,20 @@ public class Graph {
     			
     			//merge (or “contract” ) u and v into a single vertex
     			this.contractAnEdge(selected, currVerts, currEdges, currAdj);
+    			
+    			//rebuild the edge array list from the current adjacency list
+    	    	//find edge[v1, v0]
+    	    	ArrayList<GraphEdge> temp = new ArrayList<GraphEdge>();
+    			
+    	    	//For all vertices in the adjacency list, changing all occurrences of v1 to v0
+    	    	for(GraphVertex v:currVerts) {
+    	    		ArrayList<GraphVertex> neighborList2 = currAdj.get(v.id);
+    	    		for(GraphVertex temp2: neighborList2) {
+    	    			temp.add(new GraphEdge(v, temp2));
+    	    		}
+    	    	}
+    			
+    			currEdges = temp;
     		}
     		else {
     			break;
@@ -222,40 +236,34 @@ public class Graph {
 
     	}
     	
-    	printGraph(currAdj);
-    	//remove self loops
     	
+    	
+    	//remove self loops
     	ArrayList<GraphVertex> neighborList = currAdj.get(u.v0.id);
     	//ArrayList<GraphVertex> selfloop = new GraphVertex();
     	ArrayList<Integer> selfloop = new ArrayList<Integer>();
-    	int i = 0;
-    	for(GraphVertex temp: neighborList) {
-    		if(temp.getStringID().equals(u.v0.getStringID())) {
+    	int i = neighborList.size() - 1;
+    	
+    	for(; i >= 0;i--) {
+    		System.out.println("head " + u.v0.getStringID() + "-> " + neighborList.get(i).getStringID());
+    		if(neighborList.get(i).getStringID().equals(u.v0.getStringID())) {
     			//remove the self loop
     			//neighborList.remove(temp);
-    			selfloop.add(neighborList.indexOf(temp));
+    			selfloop.add(i);
+    			System.out.println("Self loop is at = " + i);
     			//update the Hashmap accordingly
     			//currAdj.put(u.v0.id, neighborList);
     		}
     	}
     	
     	for(int j = 0; j < selfloop.size(); j++)
-    		neighborList.remove(selfloop.get(j));
+    		neighborList.remove((int) selfloop.get(j));
     	
     	currAdj.put(u.v0.id, neighborList);
     	
-    	//rebuild the edge array list from the current adjacency list
-    	//find edge[v1, v0]
-    	ArrayList<GraphEdge> temp = new ArrayList<GraphEdge>();
-		for(GraphEdge u2: currEdges) {
-			if(u2.v0.compareTo(u.v1) == 0) {
-				temp.add(u2);
-				//currEdges.remove(u2);
-				
-			}
-		}
-		//then delete the edge [v1, *]
-		currEdges = temp;
+    	printGraph(currAdj);
+    	
+    	
     }
     	
     }
