@@ -103,9 +103,31 @@ public class Graph {
     	long numMinCut = 1000000;
     	
     	//make a copy of the edge list, vertex list
-    	ArrayList<GraphEdge> currEdges = new ArrayList<GraphEdge>(edges);
-    	ArrayList<GraphVertex> currVerts = new ArrayList<GraphVertex>(verts);
-    	HashMap<String, ArrayList<GraphVertex>> currAdj = new HashMap<String, ArrayList<GraphVertex>>(adj);
+    	ArrayList<GraphEdge> currEdges = new ArrayList<GraphEdge>();
+    	
+    	for (int a = 0; a < edges.size(); a++)
+        {
+            currEdges.add(edges.get(a));
+        }
+    	
+    	ArrayList<GraphVertex> currVerts = new ArrayList<GraphVertex>();
+    	
+    	for (int a = 0; a < verts.size(); a++)
+        {
+            currVerts.add(verts.get(a));
+        }
+    	
+    	HashMap<String, ArrayList<GraphVertex>> currAdj = new HashMap<String, ArrayList<GraphVertex>>();
+    	
+    	for (Map.Entry<String, ArrayList<GraphVertex>> entry : adj.entrySet()) {
+            currAdj.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+        }
+    	
+    	
+    	
+    	System.out.println("Before the Karger's algo");
+    	
+    	this.printGraph(currAdj);
     	
     	//write your random edge selector, selected edge
     	while(currVerts.size() > 2) {
@@ -152,6 +174,13 @@ public class Graph {
     		ArrayList<GraphVertex> neighborList = adj.get(finalVert.id);
     		numMinCut = neighborList.size();
     	}
+    	
+    	//reset for the next loop
+    	selected = null;
+    	selectedEdges = null;
+    	currAdj = null;
+    	currEdges = null;
+    	currVerts = null;
     	
     	//the number of edges linking these vertices is the minimum number of crossing edges in the min cut
     	return numMinCut;

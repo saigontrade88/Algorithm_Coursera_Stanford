@@ -36,9 +36,9 @@ public class Week4 {
 		// TODO Auto-generated method stub
 		// Open the file that is the first command line parameter
 		try {
-			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
+			//args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
 			
-			//args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
+			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 			
 			//Karger's parameters = 10000000;
 			long numberMinCut = 10000000;
@@ -74,21 +74,21 @@ public class Week4 {
 				myIntegerList = sol.getTokens(currentLine, "[0-9]+");
 				
 				String id;
-				System.out.println("\nPrint myIntegerList"); 
+				//System.out.println("\nPrint myIntegerList"); 
 				
-				for(String s:myIntegerList) {
-					System.out.println(s);
-				}
+//				for(String s:myIntegerList) {
+//					System.out.println(s);
+//				}
 				
 				GraphVertex mySrcVert = new GraphVertex(myIntegerList.get(0), 0, 0) ;
 				
 				verts.add(mySrcVert);
 				
-				System.out.println("My source vertex is " + mySrcVert.getStringID()); 
+				//System.out.println("My source vertex is " + mySrcVert.getStringID()); 
 				
 				GraphVertex myDestVert = null;
 				
-				System.out.println("myIntegerList size =  " + myIntegerList.size() + "\n");
+				//System.out.println("myIntegerList size =  " + myIntegerList.size() + "\n");
 				
 				for (int i = 1; i < myIntegerList.size(); i++) {
 					
@@ -101,7 +101,7 @@ public class Week4 {
 
 					// TODO: PUT CODE IN TO LOAD THE EDGES
 
-					System.out.println(myDestVert.getStringID());
+					//System.out.println(myDestVert.getStringID());
 					
 					//Add to the edge list
 					edges.add(new GraphEdge(mySrcVert, myDestVert));
@@ -110,13 +110,13 @@ public class Week4 {
 	
 			}
 		   	    
-		    System.out.println("Number of vertices " + verts.size() + "\n");
+		   // System.out.println("Number of vertices " + verts.size() + "\n");
 		    
-		    for(GraphVertex v: verts){
-		        System.out.println(v.id); 
-		      }
-		     
-		    System.out.println("Number of edges " + edges.size() + "\n");
+//		    for(GraphVertex v: verts){
+//		        System.out.println(v.id); 
+//		      }
+//		     
+		   // System.out.println("Number of edges " + edges.size() + "\n");
 		    
 
 			myInFile.close();
@@ -147,19 +147,21 @@ public class Week4 {
 		    	}
 		    }
 
-		    System.out.println("The adjacency list");
+		    //System.out.println("The adjacency list");
 		    
 		    Graph myGraph = new Graph(verts, edges, adj);
 		    
-		    myGraph.printGraph();
+		   // myGraph.printGraph();
 		    
-//		    for (int i = 0; i < 1; i++) {
-//		    	if(myGraph.kargerMinCut() < numberMinCut)
-//		    		numberMinCut = myGraph.kargerMinCut();
-//		    }
-		    
-		    numberMinCut = myGraph.kargerMinCut();
-			System.out.println("numberMinCut= " + numberMinCut);
+		    for (int i = 0; i < Math.pow(verts.size(), 2); i++) {
+		    //for (int i = 0; i <  ; i++) {
+		    	long temp = myGraph.kargerMinCut();
+		    	if(temp < numberMinCut)
+		    		numberMinCut = temp;
+		    }
+//		    
+		    //numberMinCut = myGraph.kargerMinCut();
+			System.out.println("Main class - numberMinCut= " + numberMinCut);
 
 		} catch (Exception e){//Catch exception if any
 			System.err.println("Error: " + e.toString());
