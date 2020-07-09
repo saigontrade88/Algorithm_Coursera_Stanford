@@ -103,7 +103,7 @@ public class Graph {
     	long numMinCut = 1000000;
     	
     	//make a copy of the edge list, vertex list
-    	ArrayList<GraphEdge> currEdges = new ArrayList<GraphEdge>(edges);
+    	ArrayList<GraphEdge> currEdges = null;
     	ArrayList<GraphVertex> currVerts = new ArrayList<GraphVertex>(verts);
     	HashMap<String, ArrayList<GraphVertex>> currAdj = new HashMap<String, ArrayList<GraphVertex>>(adj);
     	
@@ -202,18 +202,8 @@ public class Graph {
     		currVerts.remove(u.v1);
 
     		//then delete the edge [v0, v1].
-    		currEdges.remove(u);
+    		//currEdges.remove(u);
     		
-    		GraphEdge temp = null;
-    		//find edge[v1, v0]
-    		for(GraphEdge u2: currEdges) {
-    			if(u2.v0.compareTo(u.v1) == 0 && u2.v1.compareTo(u.v0) == 0) {
-    				temp = u2;
-    				break;
-    			}
-    		}
-    		//then delete the edge [v1, v0]
-    		currEdges.remove(temp);
     		
     	} 		 		
     	
@@ -265,7 +255,7 @@ public class Graph {
 			}
 		}
 		//then delete the edge [v1, *]
-		currEdges.removeAll(temp);
+		currEdges = temp;
     }
     	
     }
