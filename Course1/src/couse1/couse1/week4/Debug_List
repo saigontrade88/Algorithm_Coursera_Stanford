@@ -5,3 +5,7 @@ https://algs4.cs.princeton.edu/41graph/Graph.java.html
 String vs StringBuilder
 
 Add main function to unit test your Graph class
+
+The graph is dense. Should we use adjacency matrix?
+
+No need to evaluate the performance of your current implementation. Just correct it and implement the Union Find data structure. Be smart!
