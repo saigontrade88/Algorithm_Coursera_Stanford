@@ -1,0 +1,7 @@
+when creating a new graph as a deep copy of another graph, reverse so that adjacency list is in same order as original. Ref: 
+
+https://algs4.cs.princeton.edu/41graph/Graph.java.html
+
+String vs StringBuilder
+
+Add main function to unit test your Graph class
