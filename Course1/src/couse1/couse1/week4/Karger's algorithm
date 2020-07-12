@@ -1,0 +1,33 @@
+Read the input
+
+A for loop runs the FindCut algo repeatedly.
+
+In the FindCut
+
+make a deep copy of the edge list, vertex list and array list of adjacency lists as remaining vertice, edge and adjacency lists because we want to avoid modify the original graph after each edge contraction/merge step. 
+
+make an edge object for the selected edge and an array list of selected edges for book keeping purposes
+
+Observation: the size of the selected edge list must increase after each iteration
+
+In FindCut, a while len(Vertices) > 2 loop starts by checking whether len(Edges) is 0 and breaks the loop, exiting FindCut, if it does. 
+
+Choose a random edge [u, v] from the current/remaining edge list.
+
+Searches for the vertice [v] and get its adjacency list, find the occurrence of vertice [u] and delete it. Update the graph adjacency list.
+
+Add the adjusted adjacency list of [v] to the list of [u], then delete [v] from [u]'s list, delete [v] from the graph adjacency list and the remaining vertice list.  
+
+Update the graph adjacency list with the changes. 
+
+For all vertices's adjacency lists in the graph adjacency list, changing all occurrences of [v] to [u]. The super node now is [u].
+
+Remove self loops
+
+Rebuild the remaining edge list from the current graph adjacency list
+
+This ends the while loop.
+
+when finish the while loop, only 2 vertices are left only. The min cut is the number of edges connecting these two vertices. Therefore, it is the size of the first vertice's adjacency list. The two list are of equal size.
+
+After each run, the main program checks whether the number of edges is a minimum.
