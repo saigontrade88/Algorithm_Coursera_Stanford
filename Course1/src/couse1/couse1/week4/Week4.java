@@ -36,9 +36,14 @@ public class Week4 {
 		// TODO Auto-generated method stub
 		// Open the file that is the first command line parameter
 		try {
-			//args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
 			
-			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
+			//args[0] = "Course1/Input/Wk4_input_random_0_4.txt";
+			
+			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
+			
+			//args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
+			
+			//args[0] = "Course1/Input/Wk4_input_random_1_8_Forum.txt";
 			
 			//Karger's parameters = 10000000;
 			long numberMinCut = 10000000;
@@ -79,7 +84,7 @@ public class Week4 {
 //				for(String s:myIntegerList) {
 //					System.out.println(s);
 //				}
-				
+				//Create a Vertex object, first column is the source/head vertex
 				GraphVertex mySrcVert = new GraphVertex(myIntegerList.get(0), 0, 0) ;
 				
 				verts.add(mySrcVert);
@@ -89,12 +94,12 @@ public class Week4 {
 				GraphVertex myDestVert = null;
 				
 				//System.out.println("myIntegerList size =  " + myIntegerList.size() + "\n");
-				
+				// Other columns are destination/tail vertex
 				for (int i = 1; i < myIntegerList.size(); i++) {
 					
 					id = myIntegerList.get(i);
-					//Build the GraphVertex array list
 					
+					//Build the GraphVertex array list
 					myDestVert =  new GraphVertex(id, 0, 0);
 					
 					//System.out.println(s);
@@ -122,8 +127,6 @@ public class Week4 {
 			myInFile.close();
 
 			//Initialize the adjacency vertex list
-			
-
 		    adj = new HashMap<String, ArrayList<GraphVertex>>();
 		    
 		    for ( GraphVertex v : verts ) {
@@ -153,9 +156,13 @@ public class Week4 {
 		    
 		   // myGraph.printGraph();
 		    
-		    for (int i = 0; i < Math.pow(verts.size(), 2); i++) {
-		    //for (int i = 0; i <  ; i++) {
+		    //for (int i = 0; i < Math.pow(verts.size(), 2); i++) {
+		    for (int i = 0; i < 2  ; i++) {
 		    	long temp = myGraph.kargerMinCut();
+		    	//PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
+		    	System.out.println(i + "= " + temp);
+		    	//System.setOut(out);
+		    	
 		    	if(temp < numberMinCut)
 		    		numberMinCut = temp;
 		    }
