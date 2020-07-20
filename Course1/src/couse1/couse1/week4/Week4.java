@@ -37,17 +37,17 @@ public class Week4 {
 		// Open the file that is the first command line parameter
 		try {
 			
-			//args[0] = "Course1/Input/Wk4_input_random_0_4.txt";
+			args[0] = "Course1/Input/Wk4_input_random_0_4.txt";
 			
-//			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
-//					
-//			args[0] = "Course1/Input/Wk4_input_random_1_8_Forum.txt";
-//			
+			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
+					
+			args[0] = "Course1/Input/Wk4_input_random_1_8_Forum.txt";
+			
 //			args[0] = "Course1/Input/Wk4_input_random_5_40_Forum.txt";
-//			
+			
 //			args[0] = "Course1/Input/Wk4_input_random_6_8_Forum.txt";
-//			
-			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
+			
+//			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 			
 			//Karger's parameters = 10000000;
 			long numberMinCut = 10000000;

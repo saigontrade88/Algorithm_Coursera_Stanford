@@ -36,6 +36,7 @@ public class Graph {
 		//setB = new ArrayList<GraphVertex>();
 		
 		id = new int[this.getV() + 1];
+		
 		for (int i = 1; i <= this.getV(); i++)
 			id[i] = Integer.parseInt(verts.get(i - 1).getStringID());
 		
@@ -171,12 +172,34 @@ public class Graph {
 	//    }
 
 	//Modify the vertex and edge list
-	void union(GraphVertex p, GraphVertex q)
+//	void union(GraphVertex p, GraphVertex q)
+//	{
+//		int pid = id[Integer.parseInt(p.getStringID())];
+//		int qid = id[Integer.parseInt(q.getStringID())];
+//		for (int i = 1; i < id.length; i++)
+//			if (id[i] == pid) id[i] = qid;
+//	}
+	
+	private int twoPassRoot(int node_i_index) {
+		ArrayList<Integer> visited = new ArrayList<Integer>();
+		while(node_i_index != id[node_i_index]) // when the given node is not the root node 
+		{
+			node_i_index = id[node_i_index]; //chase parent pointers until reach root
+			visited.add(node_i_index);
+		}
+		// for all visited node, set its id to point to the root node
+		for(Integer v: visited) {
+			//if(id[v] != node_i_index)
+				id[v] = node_i_index;
+		}
+		return node_i_index;
+	}
+	
+	private void union(GraphVertex p, GraphVertex q)
 	{
-		int pid = id[Integer.parseInt(p.getStringID())];
-		int qid = id[Integer.parseInt(q.getStringID())];
-		for (int i = 1; i < id.length; i++)
-			if (id[i] == pid) id[i] = qid;
+		int i = twoPassRoot(Integer.parseInt(p.getStringID()));
+		int j = twoPassRoot(Integer.parseInt(q.getStringID()));
+		id[i] = j;
 	}
 	
 	
@@ -228,60 +251,56 @@ public class Graph {
 			currAdj.put(entry.getKey(), new ArrayList<>(entry.getValue()));
 		}
 		
+		
 		ArrayList<GraphVertex> setA = new ArrayList<GraphVertex>();
 		ArrayList<GraphVertex> setB = new ArrayList<GraphVertex>();
 		
-
-
+		String twoPartitions = "";
+		
 		//System.out.println("Before the Karger's algo");
 
 		//this.printGraph(currAdj);
 
 		//write your random edge selector, selected edge
 		while(countGroups > 2) {
+			if(currEdges.size() > 0) {
 
-			this.selectEdge(currEdges, currAdj);
+				this.selectEdge(currEdges, currAdj);
 
-			//merge (or “contract” ) u and v into a single vertex
+				//merge (or “contract” ) u and v into a single vertex
 
-			this.union(selected.v0, selected.v1);
-			
-			//Update the group count
-			countGroups--;
-			
-//			System.out.println("countGroups= " + countGroups);
-//			for (int i = 0; i <= this.getV(); i++)
-//				System.out.println("i= " + i + "," + "id[i]= " + id[i]);
+				this.union(selected.v0, selected.v1);
 
-			//Add [u], and [v] to the first group 
-//			if(!setA.contains(selected.v0))
-//				setA.add(selected.v0);
-//
-//			if(!setA.contains(selected.v1))
-//				setA.add(selected.v1);
 
-			//Remove [u] and [v] in the copied, original adjacency list
-//			if(currAdj.containsKey(selected.v0.getStringID()))
-//				currAdj.remove(selected.v0.getStringID());
-//			if(currAdj.containsKey(selected.v1.getStringID()))
-//				currAdj.remove(selected.v1.getStringID());
+				//Update the group count
+				countGroups--;
 
-			//Remove the selected edge from the current edge list for randomly selecting the unscanned edges
-			this.removeEdge(selected, currEdges);
+				//Remove the selected edge from the current edge list for randomly selecting the unscanned edges
+				this.removeEdge(selected, currEdges);
+				
+				//setA.add(currVerts.get(id[1] - 1));
+				for(int i = 1; i < id.length; i++) {
 
-			//Remove [u] and [v] from the copied, original vertex list
-			//currVerts.remove(selected.v0.getStringID());
-			//currVerts.remove(selected.v1.getStringID());
+					if(i == 1)
+						twoPartitions = "[(" + id[1];
+					else {
+						twoPartitions +=  "," + id[i];
+						if(i == id.length - 1)
+							twoPartitions += ")]";
+					}
 
-			
-
+				}
+				
+		System.out.println("\ncuts are " + twoPartitions);
+			}
 
 		}
 		
 		//setA.add(currVerts.get(id[1] - 1));
 		for(int i = 1; i < id.length; i++) {
 			
-			if(id[i] == id[1]) {
+			if(id[i] == id[1]) // same root? 
+			{
 				setA.add(currVerts.get(i - 1));
 			}
 			else {
@@ -289,28 +308,39 @@ public class Graph {
 			}
 				
 		}
-//		for(GraphVertex u: setA) {
-//			if(!currVerts.contains(u)) {
-//					setB.add(u);
-//			}
-//		}
+		
+		//cuts are [(1,7), (4,5)]
 		
 		
 		
 		
-//		System.out.println("\nlist of vertex in group A");
-//			
-//		for(int i = 0; i < setA.size(); i++){ 
-//			System.out.print(" A-> "+ setA.get(i).getStringID()); 
-//		} 
-//		System.out.println(); 
-//		
-//		System.out.println("\nlist of vertex in group B");
-//		
-//		for(int i = 0; i < setB.size(); i++){ 
-//			System.out.print(" B -> "+ setB.get(i).getStringID()); 
-//		} 
-//		System.out.println(); 
+		twoPartitions = "";
+		
+		for(int i = 0; i < setA.size(); i++){
+			if(i == 0)
+				twoPartitions += "[(";
+				
+			twoPartitions += "," + setA.get(i).getStringID() ;
+			
+			if(i == setA.size() - 1)
+				twoPartitions += ")";
+		} 
+		
+		for(int i = 0; i < setB.size(); i++){
+			if(i == 0)
+				twoPartitions += ", (";
+				
+			twoPartitions += "," + setB.get(i).getStringID();
+			
+			if(i == setB.size() - 1)
+				twoPartitions += ")]";
+		} 
+			 		
+		System.out.println(); 	
+		
+		
+		
+		
 		
 		//when finish the contraction, only 2 group of vertices are left only
 		for(GraphVertex u: setB) {
@@ -323,7 +353,8 @@ public class Graph {
 				}
 			}
 		}
-
+		
+		System.out.println("\ncuts are " + twoPartitions + ", numberMinCut= " + numMinCut);
 	
 		//reset for the next loop
 		selected = null;
@@ -369,7 +400,7 @@ public class Graph {
 //		selectedEdges.add(temp);
 		selected = temp;
 
-		//System.out.println("Selected edge = " + selected.toString());
+		System.out.println("Selected edge = " + selected.toString());
 		//System.out.println("My selected edge's size is " + selectedEdges.size());
 
 		//no else here 
