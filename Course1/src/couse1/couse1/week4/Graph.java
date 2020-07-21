@@ -222,9 +222,10 @@ public class Graph {
 	
 	private void union(GraphVertex p, GraphVertex q)
 	{
-		int i = twoPassRoot(Integer.parseInt(p.getStringID()));
-		int j = twoPassRoot(Integer.parseInt(q.getStringID()));
-		id[i] = j;
+		int p_root_id = twoPassRoot(Integer.parseInt(p.getStringID()));
+		int q_root_id = twoPassRoot(Integer.parseInt(q.getStringID()));
+		for (int i = 1; i < id.length; i++)
+			if (id[i] == p_root_id) id[i] = q_root_id;
 	}
 	
 	
@@ -306,19 +307,19 @@ public class Graph {
 				this.removeEdge(selected, currEdges);
 
 				//setA.add(currVerts.get(id[1] - 1));
-				for(int i = 1; i < id.length; i++) {
-
-					if(i == 1)
-						twoPartitions = "[(" + id[1];
-					else {
-						twoPartitions +=  "," + id[i];
-						if(i == id.length - 1)
-							twoPartitions += ")]";
-					}
-
-				}
-
-				System.out.println("\ncuts are " + twoPartitions);
+//				for(int i = 1; i < id.length; i++) {
+//
+//					if(i == 1)
+//						twoPartitions = "[(" + id[1];
+//					else {
+//						twoPartitions +=  "," + id[i];
+//						if(i == id.length - 1)
+//							twoPartitions += ")]";
+//					}
+//
+//				}
+//
+//				System.out.println("\ncuts are " + twoPartitions);
 			}
 
 		}
@@ -341,29 +342,29 @@ public class Graph {
 		
 		
 		
-		twoPartitions = "";
-		
-		for(int i = 0; i < setA.size(); i++){
-			if(i == 0)
-				twoPartitions += "[(";
-				
-			twoPartitions += "," + setA.get(i).getStringID() ;
-			
-			if(i == setA.size() - 1)
-				twoPartitions += ")";
-		} 
-		
-		for(int i = 0; i < setB.size(); i++){
-			if(i == 0)
-				twoPartitions += ", (";
-				
-			twoPartitions += "," + setB.get(i).getStringID();
-			
-			if(i == setB.size() - 1)
-				twoPartitions += ")]";
-		} 
-			 		
-		System.out.println(); 	
+//		twoPartitions = "";
+//		
+//		for(int i = 0; i < setA.size(); i++){
+//			if(i == 0)
+//				twoPartitions += "[(";
+//				
+//			twoPartitions += "," + setA.get(i).getStringID() ;
+//			
+//			if(i == setA.size() - 1)
+//				twoPartitions += ")";
+//		} 
+//		
+//		for(int i = 0; i < setB.size(); i++){
+//			if(i == 0)
+//				twoPartitions += ", (";
+//				
+//			twoPartitions += "," + setB.get(i).getStringID();
+//			
+//			if(i == setB.size() - 1)
+//				twoPartitions += ")]";
+//		} 
+//			 		
+//		System.out.println(); 	
 		
 		
 		
@@ -381,7 +382,7 @@ public class Graph {
 			}
 		}
 		
-		System.out.println("\ncuts are " + twoPartitions + ", numberMinCut= " + numMinCut);
+		//System.out.println("\ncuts are " + twoPartitions + ", numberMinCut= " + numMinCut);
 	
 		//reset for the next loop
 		selected = null;
@@ -427,7 +428,7 @@ public class Graph {
 //		selectedEdges.add(temp);
 		selected = temp;
 
-		System.out.println("Selected edge = " + selected.toString());
+		//System.out.println("Selected edge = " + selected.toString());
 		//System.out.println("My selected edge's size is " + selectedEdges.size());
 
 		//no else here 
