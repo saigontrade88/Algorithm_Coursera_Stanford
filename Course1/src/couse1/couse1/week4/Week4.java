@@ -45,7 +45,7 @@ public class Week4 {
 			
 			args[0] = "Course1/Input/Wk4_input_random_4_8_Forum.txt"; //Output = 1
 			
-		//	args[0] = "Course1/Input/Wk4_input_random_5_40_Forum.txt"; // //Output = 3
+			args[0] = "Course1/Input/Wk4_input_random_5_40_Forum.txt"; // //Output = 3
 			
 		//	args[0] = "Course1/Input/Wk4_input_random_6_8_Forum.txt"; //Output = 2
 			
@@ -166,8 +166,8 @@ public class Week4 {
 		    
 //		    myGraph.main(null);
 		    
-		    for (int i = 0; i < (int) Math.ceil(Math.pow(verts.size(), 2) * Math.log(verts.size())); i++) {
-		    //for (int i = 0; i < 40; i++) {
+		    //for (int i = 0; i < (int) Math.ceil(Math.pow(verts.size(), 2) * Math.log(verts.size())); i++) {
+		    for (int i = 0; i < 2000; i++) {
 		    	long temp = myGraph.kargerMinCut();
 		    	//PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
 		    	//System.out.println(i + "= " + temp);

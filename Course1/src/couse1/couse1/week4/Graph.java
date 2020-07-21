@@ -13,6 +13,7 @@ public class Graph {
 	//private ArrayList<GraphVertex> setA;
 	//private ArrayList<GraphVertex> setB;
 	private int[] id;
+	private int[] sz; // count number of objects in the tree rooted at vertex i_th
 	private int countGroups;
 	
 	ArrayList<GraphVertex> verts;
@@ -36,10 +37,12 @@ public class Graph {
 		//setB = new ArrayList<GraphVertex>();
 		
 		id = new int[this.getV() + 1];
+		sz = new int[this.getV() + 1];
 		
-		for (int i = 1; i <= this.getV(); i++)
+		for (int i = 1; i <= this.getV(); i++) {
 			id[i] = Integer.parseInt(verts.get(i - 1).getStringID());
-		
+			sz[i] = 1; //initialize the size array. At beginning, each tree has only one member, the root itself.
+		}
 //		for (int i = 1; i <= this.getV(); i++)
 //			System.out.println("i= " + i + "," + "id[i]= " + id[i]);
 		
@@ -220,10 +223,25 @@ public class Graph {
 		return i == j;
 	}
 	
+	// V - 2 calls to union method. Each call takes V times so in total O(V^2). Too slow not scale.
+	// Expect one call to union method only takes lgV
 	private void union(GraphVertex p, GraphVertex q)
 	{
-		int p_root_id = twoPassRoot(Integer.parseInt(p.getStringID()));
+		int p_root_id = twoPassRoot(Integer.parseInt(p.getStringID())); // takes at most logV
 		int q_root_id = twoPassRoot(Integer.parseInt(q.getStringID()));
+		
+		if(p_root_id == q_root_id) return;
+		
+		if(this.sz[p_root_id] < this.sz[q_root_id]) {
+			id[p_root_id] = q_root_id;
+			sz[q_root_id] += sz[p_root_id];
+		}
+		else {
+			id[q_root_id] = p_root_id;
+			sz[p_root_id] += sz[q_root_id];
+		}
+		
+		// at most 2*V array accesses
 		for (int i = 1; i < id.length; i++)
 			if (id[i] == p_root_id) id[i] = q_root_id;
 	}
@@ -236,19 +254,19 @@ public class Graph {
 //			throw new IllegalArgumentException("The input vertices don't both exist.");
 //		}
 		// Check whether the edge to remove exists
-		GraphEdge edgeToRemove = null;
-		for(GraphEdge temp:currEdge) {
-			if(temp.v0.equals(u.v1) && temp.v1.equals(u.v0) ) {
-				edgeToRemove = temp;
-				break;
-			}
-		}
-		if (edgeToRemove == null) {
-			throw new IllegalArgumentException("The edge to remove doesn't exist.");
-		}
+//		GraphEdge edgeToRemove = null;
+//		for(GraphEdge temp:currEdge) {
+//			if(temp.v0.equals(u.v1) && temp.v1.equals(u.v0) ) {
+//				edgeToRemove = temp;
+//				break;
+//			}
+//		}
+//		if (edgeToRemove == null) {
+//			throw new IllegalArgumentException("The edge to remove doesn't exist.");
+//		}
 
 		currEdge.remove(u);
-		currEdge.remove(edgeToRemove);
+		//currEdge.remove(edgeToRemove);
 	}
 	
 	long kargerMinCut() {
@@ -281,6 +299,8 @@ public class Graph {
 		ArrayList<GraphVertex> setA = new ArrayList<GraphVertex>();
 		ArrayList<GraphVertex> setB = new ArrayList<GraphVertex>();
 		
+		
+		
 		String twoPartitions = "";
 		
 		//System.out.println("Before the Karger's algo");
@@ -302,6 +322,9 @@ public class Graph {
 
 					//Update the group count
 					countGroups--;
+				}
+				else { // two vertices share the same root
+					
 				}
 				//Remove the selected edge from the current edge list for randomly selecting the unscanned edges
 				this.removeEdge(selected, currEdges);
@@ -394,8 +417,10 @@ public class Graph {
 		
 		countGroups = verts.size();
 		
-		for (int i = 1; i <= this.getV(); i++)
+		for (int i = 1; i <= this.getV(); i++) {
 			id[i] = Integer.parseInt(verts.get(i - 1).getStringID());
+			sz[i] = 1;
+		}
 
 		//the number of edges linking these vertices is the minimum number of crossing edges in the min cut
 		return numMinCut;
