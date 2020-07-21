@@ -48,6 +48,8 @@ public class Week4 {
 			args[0] = "Course1/Input/Wk4_input_random_6_8_Forum.txt";
 			
 			args[0] = "Course1/Input/Wk4_input_random_4_8_Forum.txt";
+			
+			args[0] = "Course1/Input/Wk4_input_random_7_8_Forum.txt";
 //			
 //			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 			
