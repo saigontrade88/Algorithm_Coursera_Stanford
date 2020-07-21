@@ -51,7 +51,7 @@ public class Week4 {
 			
 		//	args[0] = "Course1/Input/Wk4_input_random_7_8_Forum.txt"; //Output = 1
 			
-//			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
+			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 			 
 			//Karger's parameters = 10000000;
 			long numberMinCut = 10000000;
