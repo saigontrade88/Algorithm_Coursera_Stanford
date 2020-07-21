@@ -41,14 +41,18 @@ public class Week4 {
 			
 			args[0] = "Course1/Input/Wk4_input_random_1_6.txt";
 					
-			args[0] = "Course1/Input/Wk4_input_random_1_8_Forum.txt";
+			args[0] = "Course1/Input/Wk4_input_random_1_8_Forum.txt"; //Output = 2
 			
-			args[0] = "Course1/Input/Wk4_input_random_5_40_Forum.txt";
+			args[0] = "Course1/Input/Wk4_input_random_4_8_Forum.txt"; //Output = 1
 			
-			args[0] = "Course1/Input/Wk4_input_random_6_8_Forum.txt";
+		//	args[0] = "Course1/Input/Wk4_input_random_5_40_Forum.txt"; // //Output = 3
+			
+		//	args[0] = "Course1/Input/Wk4_input_random_6_8_Forum.txt"; //Output = 2
+			
+		//	args[0] = "Course1/Input/Wk4_input_random_7_8_Forum.txt"; //Output = 1
 			
 //			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
-			
+			 
 			//Karger's parameters = 10000000;
 			long numberMinCut = 10000000;
 
@@ -160,7 +164,7 @@ public class Week4 {
 		    
 		   // myGraph.printGraph();
 		    
-		    myGraph.main(null);
+//		    myGraph.main(null);
 		    
 		    for (int i = 0; i < (int) Math.ceil(Math.pow(verts.size(), 2) * Math.log(verts.size())); i++) {
 		    //for (int i = 0; i < 40; i++) {
