@@ -180,19 +180,44 @@ public class Graph {
 //			if (id[i] == pid) id[i] = qid;
 //	}
 	
+	static int twoPassRoot_Test(int node_i_index, int[] myId) {
+		ArrayList<Integer> visited = new ArrayList<Integer>();
+		while(node_i_index != myId[node_i_index]) // when the given node is not the root node 
+		{	
+			visited.add(node_i_index);
+			node_i_index = myId[node_i_index]; //chase parent pointers until reach root
+			//visited.add(node_i_index);
+		}
+		// for all visited node, set its id to point to the root node
+		for(Integer v: visited) {
+			//if(id[v] != node_i_index)
+				myId[v] = node_i_index;
+		}
+		return node_i_index;
+	}
+	
+
 	private int twoPassRoot(int node_i_index) {
 		ArrayList<Integer> visited = new ArrayList<Integer>();
-		while(node_i_index != id[node_i_index]) // when the given node is not the root node 
-		{
-			node_i_index = id[node_i_index]; //chase parent pointers until reach root
+		while(node_i_index != this.id[node_i_index]) // when the given node is not the root node 
+		{	
 			visited.add(node_i_index);
+			node_i_index = id[node_i_index]; //chase parent pointers until reach root
+			//visited.add(node_i_index);
 		}
 		// for all visited node, set its id to point to the root node
 		for(Integer v: visited) {
 			//if(id[v] != node_i_index)
 				id[v] = node_i_index;
+				
 		}
 		return node_i_index;
+	}
+	
+	private boolean connected(GraphVertex p, GraphVertex q) {
+		int i = id[Integer.parseInt(p.getStringID())];
+		int j = id[Integer.parseInt(q.getStringID())];
+		return i == j;
 	}
 	
 	private void union(GraphVertex p, GraphVertex q)
@@ -268,16 +293,18 @@ public class Graph {
 				this.selectEdge(currEdges, currAdj);
 
 				//merge (or “contract” ) u and v into a single vertex
+				if(!this.connected(selected.v0, selected.v1)) {
 
-				this.union(selected.v0, selected.v1);
+
+					this.union(selected.v0, selected.v1);
 
 
-				//Update the group count
-				countGroups--;
-
+					//Update the group count
+					countGroups--;
+				}
 				//Remove the selected edge from the current edge list for randomly selecting the unscanned edges
 				this.removeEdge(selected, currEdges);
-				
+
 				//setA.add(currVerts.get(id[1] - 1));
 				for(int i = 1; i < id.length; i++) {
 
@@ -290,8 +317,8 @@ public class Graph {
 					}
 
 				}
-				
-		System.out.println("\ncuts are " + twoPartitions);
+
+				System.out.println("\ncuts are " + twoPartitions);
 			}
 
 		}
@@ -490,7 +517,19 @@ public class Graph {
 	 * @param args the command-line arguments
 	 */
 	public static void main(String[] args) {
-
+		
+		int[] input = {0, 0, 0, 1, 1, 1, 3, 3, 6, 6, 8, 9, 9};
+		
+		twoPassRoot_Test(9, input);
+		
+		String result = "[";
+		for(int i = 0; i < input.length; i++) {
+			result += input[i] + ",";
+			if(i == input.length - 1)
+				result += "]";
+		}
+		
+		System.out.println(result);
 	}
 }
     

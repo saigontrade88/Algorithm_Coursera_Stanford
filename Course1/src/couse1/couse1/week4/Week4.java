@@ -43,9 +43,9 @@ public class Week4 {
 					
 			args[0] = "Course1/Input/Wk4_input_random_1_8_Forum.txt";
 			
-//			args[0] = "Course1/Input/Wk4_input_random_5_40_Forum.txt";
+			args[0] = "Course1/Input/Wk4_input_random_5_40_Forum.txt";
 			
-//			args[0] = "Course1/Input/Wk4_input_random_6_8_Forum.txt";
+			args[0] = "Course1/Input/Wk4_input_random_6_8_Forum.txt";
 			
 //			args[0] = "Course1/Input/Wk4_kargerMinCut.txt";
 			
@@ -160,8 +160,10 @@ public class Week4 {
 		    
 		   // myGraph.printGraph();
 		    
-		    //for (int i = 0; i < (int) Math.ceil(Math.pow(verts.size(), 2) * Math.log(verts.size())); i++) {
-		    for (int i = 0; i < 400  ; i++) {
+		    myGraph.main(null);
+		    
+		    for (int i = 0; i < (int) Math.ceil(Math.pow(verts.size(), 2) * Math.log(verts.size())); i++) {
+		    //for (int i = 0; i < 40; i++) {
 		    	long temp = myGraph.kargerMinCut();
 		    	//PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
 		    	//System.out.println(i + "= " + temp);
