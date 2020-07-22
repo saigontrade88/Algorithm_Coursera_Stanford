@@ -166,8 +166,8 @@ public class Week4 {
 		    
 //		    myGraph.main(null);
 		    
-		    //for (int i = 0; i < (int) Math.ceil(Math.pow(verts.size(), 2) * Math.log(verts.size())); i++) {
-		    for (int i = 0; i < 2000; i++) {
+		    for (int i = 0; i < (int) Math.ceil(Math.pow(verts.size(), 2) * Math.log(verts.size())); i++) {
+		    //for (int i = 0; i < 2000; i++) {
 		    	long temp = myGraph.kargerMinCut();
 		    	//PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
 		    	//System.out.println(i + "= " + temp);

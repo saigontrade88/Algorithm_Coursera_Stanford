@@ -183,6 +183,7 @@ public class Graph {
 //			if (id[i] == pid) id[i] = qid;
 //	}
 	
+	// Test the twoPassRoot method
 	static int twoPassRoot_Test(int node_i_index, int[] myId) {
 		ArrayList<Integer> visited = new ArrayList<Integer>();
 		while(node_i_index != myId[node_i_index]) // when the given node is not the root node 
@@ -199,7 +200,7 @@ public class Graph {
 		return node_i_index;
 	}
 	
-
+	// Time complexity: O(logV), logV is the maximum height of any tree
 	private int twoPassRoot(int node_i_index) {
 		ArrayList<Integer> visited = new ArrayList<Integer>();
 		while(node_i_index != this.id[node_i_index]) // when the given node is not the root node 
@@ -216,7 +217,7 @@ public class Graph {
 		}
 		return node_i_index;
 	}
-	
+	// Time complexity: O(1)
 	private boolean connected(GraphVertex p, GraphVertex q) {
 		int i = id[Integer.parseInt(p.getStringID())];
 		int j = id[Integer.parseInt(q.getStringID())];
@@ -246,25 +247,8 @@ public class Graph {
 			if (id[i] == p_root_id) id[i] = q_root_id;
 	}
 	
-	
+	// Time complexity: O(M) including random access O(1) and rearrange the array O(M)
 	public void removeEdge(GraphEdge u, ArrayList<GraphEdge> currEdge) {
-		// Check whether the input vertices both exist
-		//GraphVertex end1 = findVtx(end1ID), end2 = findVtx(end2ID);
-//		if ((end1 == null) || (end2 == null)) {
-//			throw new IllegalArgumentException("The input vertices don't both exist.");
-//		}
-		// Check whether the edge to remove exists
-//		GraphEdge edgeToRemove = null;
-//		for(GraphEdge temp:currEdge) {
-//			if(temp.v0.equals(u.v1) && temp.v1.equals(u.v0) ) {
-//				edgeToRemove = temp;
-//				break;
-//			}
-//		}
-//		if (edgeToRemove == null) {
-//			throw new IllegalArgumentException("The edge to remove doesn't exist.");
-//		}
-
 		currEdge.remove(u);
 		//currEdge.remove(edgeToRemove);
 	}
@@ -300,8 +284,8 @@ public class Graph {
 		ArrayList<GraphVertex> setB = new ArrayList<GraphVertex>();
 		
 		
-		
-		String twoPartitions = "";
+		//Debug purpose
+		//String twoPartitions = "";
 		
 		//System.out.println("Before the Karger's algo");
 
@@ -313,10 +297,11 @@ public class Graph {
 
 				this.selectEdge(currEdges, currAdj);
 
-				//merge (or “contract” ) u and v into a single vertex
+				//if u and v are disconnected, merge (or “contract” ) u and v into a single vertex
+				// This if block is called (V - 2) times
 				if(!this.connected(selected.v0, selected.v1)) {
 
-
+					// Time complexy O(V)
 					this.union(selected.v0, selected.v1);
 
 
@@ -327,9 +312,10 @@ public class Graph {
 					
 				}
 				//Remove the selected edge from the current edge list for randomly selecting the unscanned edges
-				this.removeEdge(selected, currEdges);
+				// Time complexity O(M)
+				//this.removeEdge(selected, currEdges);
 
-				//setA.add(currVerts.get(id[1] - 1));
+				//Debug 
 //				for(int i = 1; i < id.length; i++) {
 //
 //					if(i == 1)
@@ -347,7 +333,7 @@ public class Graph {
 
 		}
 		
-		//setA.add(currVerts.get(id[1] - 1));
+		//Form two components - O(V)
 		for(int i = 1; i < id.length; i++) {
 			
 			if(id[i] == id[1]) // same root? 
@@ -362,9 +348,7 @@ public class Graph {
 		
 		//cuts are [(1,7), (4,5)]
 		
-		
-		
-		
+// Debug purposes		
 //		twoPartitions = "";
 //		
 //		for(int i = 0; i < setA.size(); i++){
@@ -394,6 +378,7 @@ public class Graph {
 		
 		
 		//when finish the contraction, only 2 group of vertices are left only
+		// loop through these two separate components to find the edges belong to different components
 		for(GraphVertex u: setB) {
 			if(currAdj.containsKey(u.getStringID())){
 				ArrayList<GraphVertex> neighborList = currAdj.get(u.getStringID());
@@ -460,83 +445,6 @@ public class Graph {
 
 	}
 
-	void contractAnEdge(GraphEdge selectedEdge, ArrayList<GraphVertex> currVerts, ArrayList<GraphEdge>currEdges, HashMap<String, ArrayList<GraphVertex>> currAdj) {
-		//A for searches the list Vertices[u.v1] for the occurrence of u.v0 and deletes it
-		if(currAdj.containsKey(selectedEdge.v1.id)) {
-			//constant time for get and put methods
-			ArrayList<GraphVertex> neighborListV1 = currAdj.get(selectedEdge.v1.id);
-			//delete the neighboring vertex
-			neighborListV1.remove(selectedEdge.v0);
-			//verts.remove(u.v0);
-
-			//update the Hashmap
-			currAdj.put(selectedEdge.v1.id, neighborListV1);
-
-			//Add the list Vertices[v1] to the list Vertices[v0]
-			ArrayList<GraphVertex> neighborListV0 = currAdj.get(selectedEdge.v0.id);
-
-			// Time complexity?
-			neighborListV0.addAll(neighborListV1);
-
-			neighborListV0.remove(selectedEdge.v1);
-
-			//update the Hashmap
-			currAdj.put(selectedEdge.v0.id, neighborListV0);
-
-			//delete the Vertices[v1]
-			currAdj.remove(selectedEdge.v1.getStringID());
-
-			currVerts.remove(selectedEdge.v1);
-
-			//then delete the edge [v0, v1].
-			//currEdges.remove(u);
-
-		} 		 		
-
-		//For all vertices in the adjacency list, changing all occurrences of v1 to v0
-		// Time complexity V*V
-		for(GraphVertex v:currVerts) {
-			ArrayList<GraphVertex> neighborList = currAdj.get(v.id);
-			
-			for(GraphVertex temp: neighborList) {
-				if(temp.getStringID().equals(selectedEdge.v1.getStringID())) {
-					//replace vertex v1 with v0, indexOf complexity?
-					neighborList.set(neighborList.indexOf(temp), selectedEdge.v0);
-					//update the Hashmap accordingly
-					currAdj.put(v.id, neighborList);
-				}	
-			}
-
-
-		}
-
-		//remove self loops in the super node
-		ArrayList<GraphVertex> neighborList = currAdj.get(selectedEdge.v0.id);
-		//ArrayList<GraphVertex> selfloop = new GraphVertex();
-		ArrayList<Integer> selfloop = new ArrayList<Integer>();
-		int i = neighborList.size() - 1;
-
-		for(; i >= 0;i--) {
-			//System.out.println("head " + selectedEdge.v0.getStringID() + "-> " + neighborList.get(i).getStringID());
-			if(neighborList.get(i).getStringID().equals(selectedEdge.v0.getStringID())) {
-				//remove the self loop
-				//neighborList.remove(temp);
-				selfloop.add(i);
-				//System.out.println("Self loop is at = " + i);
-				//update the Hashmap accordingly
-				//currAdj.put(u.v0.id, neighborList);
-			}
-		}
-
-		for(int j = 0; j < selfloop.size(); j++)
-			neighborList.remove((int) selfloop.get(j));
-
-		currAdj.put(selectedEdge.v0.id, neighborList);
-
-		//printGraph(currAdj);
-		
-		
-	}
 	/**
 	 * Unit tests the {@code Graph} data type.
 	 *
