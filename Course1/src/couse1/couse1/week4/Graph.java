@@ -246,13 +246,7 @@ public class Graph {
 		for (int i = 1; i < id.length; i++)
 			if (id[i] == p_root_id) id[i] = q_root_id;
 	}
-	
-	// Time complexity: O(M) including random access O(1) and rearrange the array O(M)
-	public void removeEdge(GraphEdge u, ArrayList<GraphEdge> currEdge) {
-		currEdge.remove(u);
-		//currEdge.remove(edgeToRemove);
-	}
-	
+		
 	long kargerMinCut() {
 
 		long numMinCut = 0;
